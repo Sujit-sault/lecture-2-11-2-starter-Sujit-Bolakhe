@@ -1,5 +1,6 @@
 package csd230.bookstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import csd230.bookstore.pojos.SaleableItem;
 import jakarta.persistence.*;
 
@@ -15,6 +16,8 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 2. Add @JsonIgnore here to prevent the infinite JSON loop
+    @JsonIgnore
     @ManyToMany(mappedBy = "products")
     private Set<CartEntity> carts = new HashSet<>();
 
@@ -41,11 +44,10 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
 
 
 
-    // --- ADD THIS METHOD —
+    // --- ADD THIS METHOD --
     // This allows Thymeleaf to access "${product.productType}" safely
     public String getProductType() {
         return this.getClass().getSimpleName();
     }
 
 }
-
