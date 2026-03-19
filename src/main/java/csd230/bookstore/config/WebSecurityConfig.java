@@ -45,10 +45,8 @@ public class WebSecurityConfig {
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
 
                         // 3. REST API Security (Requires Role)
-//                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/rest/**").hasAnyRole("USER", "ADMIN")
-//                        .requestMatchers("/api/rest/**").hasRole("ADMIN")
-// Temporarily open for Lecture 2.11.2. Will secure in future JWT lecture.
-                        .requestMatchers("/api/rest/**").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/rest/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/rest/**").hasRole("ADMIN")
 
                         // 4. Web UI Admin
                         .requestMatchers("/books/add", "/books/edit/**", "/books/delete/**").hasRole("ADMIN")

@@ -1,0 +1,7 @@
+package csd230.bookstore.repositories;
+
+import csd230.bookstore.entities.TicketEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TicketEntityRepository extends JpaRepository<TicketEntity, Long> {
+}

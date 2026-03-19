@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function Magazine({ id, title, price, copies, orderQty, currentIssue, onDelete, onUpdate, onAddToCart }) {
+function Magazine({ id, title, price, copies, orderQty, currentIssue, onDelete, onUpdate, onAddToCart, isAdmin }) {
     // Helper to format Java LocalDateTime for HTML5 datetime-local input
     const formatIssueDate = (issue) => {
         if (!issue) return '';
@@ -46,12 +46,16 @@ function Magazine({ id, title, price, copies, orderQty, currentIssue, onDelete, 
                 <p><strong>Issue:</strong> {formatIssueDate(currentIssue).replace('T', ' ')} | <strong>Price:</strong> ${Number(price).toFixed(2)}</p>
             </div>
             <div className="book-actions">
-                {/* NEW ADD TO CART BUTTON */}
                 <button onClick={() => onAddToCart(id)} style={{ backgroundColor: '#28a745', color: 'white' }}>
                     🛒 Add to Cart
                 </button>
-                <button onClick={() => setIsEditing(true)} style={{ backgroundColor: '#ffc107' }}>Edit</button>
-                <button onClick={() => onDelete(id)} style={{ backgroundColor: '#ff4444', color: 'white' }}>Delete</button>
+                {/* Only show Edit/Delete if user is Admin */}
+                {isAdmin && (
+                    <>
+                        <button onClick={() => setIsEditing(true)} style={{ backgroundColor: '#ffc107' }}>Edit</button>
+                        <button onClick={() => onDelete(id)} style={{ backgroundColor: '#ff4444', color: 'white' }}>Delete</button>
+                    </>
+                )}
             </div>
         </div>
     );

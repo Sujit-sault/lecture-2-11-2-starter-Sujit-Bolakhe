@@ -1,29 +1,35 @@
 import { useState } from 'react';
 
-function Book({ id, title, author, price, onDelete, onUpdate, onAddToCart, isAdmin }) {
+function Ticket({ id, description, price, onDelete, onUpdate, onAddToCart, isAdmin }) {
     const [isEditing, setIsEditing] = useState(false);
-    const [tempTitle, setTempTitle] = useState(title);
-    const [tempAuthor, setTempAuthor] = useState(author);
+    const [tempDescription, setTempDescription] = useState(description);
     const [tempPrice, setTempPrice] = useState(price);
 
     const handleSave = () => {
-        const updatedBook = {
+        const updatedTicket = {
             id,
-            title: tempTitle,
-            author: tempAuthor,
-            price: parseFloat(tempPrice),
-            copies: 10
+            description: tempDescription,
+            price: parseFloat(tempPrice)
         };
-        onUpdate(id, updatedBook);
+        onUpdate(id, updatedTicket);
         setIsEditing(false);
     };
 
     if (isEditing) {
         return (
             <div className="book-row editing">
-                <input type="text" value={tempTitle} onChange={(e) => setTempTitle(e.target.value)} />
-                <input type="text" value={tempAuthor} onChange={(e) => setTempAuthor(e.target.value)} />
-                <input type="number" value={tempPrice} onChange={(e) => setTempPrice(e.target.value)} />
+                <input
+                    type="text"
+                    value={tempDescription}
+                    onChange={(e) => setTempDescription(e.target.value)}
+                    style={{flex: 2}}
+                />
+                <input
+                    type="number"
+                    step="0.01"
+                    value={tempPrice}
+                    onChange={(e) => setTempPrice(e.target.value)}
+                />
                 <button onClick={handleSave} className="btn-save">Save</button>
                 <button onClick={() => setIsEditing(false)}>Cancel</button>
             </div>
@@ -33,8 +39,8 @@ function Book({ id, title, author, price, onDelete, onUpdate, onAddToCart, isAdm
     return (
         <div className="book-row">
             <div className="book-info">
-                <h3>{title}</h3>
-                <p><strong>Author:</strong> {author} | <strong>Price:</strong> ${Number(price).toFixed(2)}</p>
+                <h3>{description}</h3>
+                <p><strong>Price:</strong> ${Number(price).toFixed(2)}</p>
             </div>
             <div className="book-actions">
                 <button onClick={() => onAddToCart(id)} style={{ backgroundColor: '#28a745', color: 'white' }}>
@@ -52,5 +58,4 @@ function Book({ id, title, author, price, onDelete, onUpdate, onAddToCart, isAdm
     );
 }
 
-export default Book;
-
+export default Ticket;
